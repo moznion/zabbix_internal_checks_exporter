@@ -1,9 +1,5 @@
 project_name: zabbix-internal-checks-exporter
 
-before:
-  hooks:
-    - go mod tidy
-
 builds:
   -
     main: ./v4.4/cmd/zabbix_internal_checks_exporter/main.go
