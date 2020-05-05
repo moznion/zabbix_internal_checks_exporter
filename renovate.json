@@ -1,5 +1,9 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "labels": ["auto-dep"],
+  "vulnerabilityAlerts": {
+    "labels": ["security"]
+  }
 }
