@@ -11,8 +11,9 @@ import (
 )
 
 var (
-	ErrUnexpectedJSONRPCClientError = errors.New("unexpected JSON RPC client error")
+	// ErrJSONRPCClientRequestError is an error that is raised JSON-RPC request was failed.
 	ErrJSONRPCClientRequestError    = errors.New("failed a request of JSON RPC to zabbix")
+	errUnexpectedJSONRPCClientError = errors.New("unexpected JSON RPC client error")
 )
 
 const defaultJSONRPCVersion = "2.0"
@@ -24,6 +25,7 @@ const extendOutput = "extend"
 const itemGetMethod = "item.get"
 const userLoginMethod = "user.login"
 
+// JSONRPCClient is a JSON-RPC client for Zabbix.
 type JSONRPCClient struct {
 	ZabbixBaseURL string
 }
@@ -47,10 +49,12 @@ type itemGetRequest struct {
 	Params         *itemGetRequestParam `json:"params"`
 }
 
+// ItemGetResponse is a struct that represents a envelope of responses for JSON-RPC `item.get` request.
 type ItemGetResponse struct {
 	Result []*ItemGetResponseResult `json:"result"`
 }
 
+// ItemGetResponseResult is a struct that represents a response for JSON-RPC `item.get` request.
 type ItemGetResponseResult struct {
 	Name      string      `json:"name"`
 	Key       string      `json:"key_"`
@@ -76,10 +80,11 @@ func makeItemGetRequest(authToken string, itemKey string) *itemGetRequest {
 	}
 }
 
+// GetItem retrieves item according to the given key through `item.get` JSON-RPC request.
 func (c *JSONRPCClient) GetItem(authToken string, internalChecksKey string) (*ItemGetResponse, error) {
 	reqBody, err := json.Marshal(makeItemGetRequest(authToken, internalChecksKey))
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", err, ErrUnexpectedJSONRPCClientError)
+		return nil, fmt.Errorf("%s: %w", err, errUnexpectedJSONRPCClientError)
 	}
 
 	resp, err := c.doRequest(reqBody)
@@ -94,13 +99,13 @@ func (c *JSONRPCClient) GetItem(authToken string, internalChecksKey string) (*It
 
 	bs, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", err, ErrUnexpectedJSONRPCClientError)
+		return nil, fmt.Errorf("%s: %w", err, errUnexpectedJSONRPCClientError)
 	}
 
 	var itemGetResponse ItemGetResponse
 	err = json.Unmarshal(bs, &itemGetResponse)
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", err, ErrUnexpectedJSONRPCClientError)
+		return nil, fmt.Errorf("%s: %w", err, errUnexpectedJSONRPCClientError)
 	}
 
 	return &itemGetResponse, nil
@@ -118,6 +123,7 @@ type userLoginRequestParam struct {
 	Password string `json:"password"`
 }
 
+// UserLoginResponse is a struct that represents a response of JSON-RPC `user.login`.
 type UserLoginResponse struct {
 	AuthToken string `json:"result"`
 }
@@ -134,10 +140,11 @@ func makeUserLoginRequest(userName string, password string) *userLoginRequest {
 	}
 }
 
+// UserLogin attempts authentication with given user name and password through the JSON-RPC `user.login` request.
 func (c *JSONRPCClient) UserLogin(userName string, password string) (*UserLoginResponse, error) {
 	reqBody, err := json.Marshal(makeUserLoginRequest(userName, password))
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", err, ErrUnexpectedJSONRPCClientError)
+		return nil, fmt.Errorf("%s: %w", err, errUnexpectedJSONRPCClientError)
 	}
 
 	resp, err := c.doRequest(reqBody)
@@ -152,13 +159,13 @@ func (c *JSONRPCClient) UserLogin(userName string, password string) (*UserLoginR
 
 	bs, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", err, ErrUnexpectedJSONRPCClientError)
+		return nil, fmt.Errorf("%s: %w", err, errUnexpectedJSONRPCClientError)
 	}
 
 	var userLoginResponse UserLoginResponse
 	err = json.Unmarshal(bs, &userLoginResponse)
 	if err != nil {
-		return nil, fmt.Errorf("%s: %w", err, ErrUnexpectedJSONRPCClientError)
+		return nil, fmt.Errorf("%s: %w", err, errUnexpectedJSONRPCClientError)
 	}
 
 	return &userLoginResponse, nil

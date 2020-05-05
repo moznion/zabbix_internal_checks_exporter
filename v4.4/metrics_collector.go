@@ -17,6 +17,7 @@ const enabledItemStatus = 0
 const namespace = "zabbix_internal_checks"
 const metricsCollectedAtEpochMillis = "metrics_collected_at"
 
+// MetricsCollector is a struct that represents a collector for "Zabbix internal checks".
 type MetricsCollector struct {
 	metrics       map[string]prometheus.Gauge
 	jsonRPCClient *internal.JSONRPCClient
@@ -25,6 +26,7 @@ type MetricsCollector struct {
 	interval      time.Duration
 }
 
+// NewMetricsCollector makes a MetricCollector according to the given parameters.
 func NewMetricsCollector(jsonRPCClient *internal.JSONRPCClient, userName string, password string, interval time.Duration) *MetricsCollector {
 	return &MetricsCollector{
 		metrics:       make(map[string]prometheus.Gauge),
@@ -35,6 +37,7 @@ func NewMetricsCollector(jsonRPCClient *internal.JSONRPCClient, userName string,
 	}
 }
 
+// StartCollecting starts a goroutine to collect the "Zabbix internal checks" metrics.
 func (mc *MetricsCollector) StartCollecting() {
 	go func() {
 		mc.initMetrics()
