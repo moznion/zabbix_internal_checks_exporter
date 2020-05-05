@@ -1,4 +1,4 @@
-# zabbix-internal-checks-exporter
+# zabbix_internal_checks_exporter
 
 A Prometheus exporter for [Zabbix internal checks](https://www.zabbix.com/documentation/current/manual/config/items/itemtypes/internal) metrics.
 
@@ -25,7 +25,7 @@ And this exporter returns the metrics when that received a HTTP request to `GET 
 
 ## Installation
 
-Pre built binaries are on [Releases](https://github.com/moznion/zabbix-internal-checks-exporter/releases).
+Pre built binaries are on [Releases](https://github.com/moznion/zabbix_internal_checks_exporter/releases).
 
 ## Supported Zabbix version
 
