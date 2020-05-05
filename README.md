@@ -47,13 +47,13 @@ This value is set epoch milliseconds when the "Zabbix internal checks" metrics w
 
 This exporter uses a key of a Zabbix metric as a Prometheus metric name, but it sanitizes some metric name because of the limitation of Prometheus's naming rule.
 
-|original|sanitized|
-|--------|---------|
-| '['    | '\_\_'  |
-| ','    | ':'     |
-| ']'    | ''      |
-| ' '    | '\_'    |
-| '-'    | '\_'    |
+|original|sanitized        |
+|--------|-----------------|
+| `[`    | `__`            |
+| `,`    | `:`             |
+| `]`    | `` (empty char) |
+| ` `    | `_`             |
+| `-`    | `_`             |
 
 ## License
 
