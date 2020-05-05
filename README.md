@@ -11,6 +11,8 @@ Usage of zabbix-internal-checks-exporter:
         [optional] an interval seconds of collecting the metrics (default 30)
   -port int
         [mandatory] a port number of exporter listens (default -1)
+  -version
+        show version information
   -zabbix-password string
         [mandatory] a Zabbix server password for authentication to use API
   -zabbix-url string
