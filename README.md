@@ -21,6 +21,10 @@ Usage of zabbix-internal-checks-exporter:
 
 And this exporter returns the metrics when that received a HTTP request to `GET /metrics`.
 
+## Installation
+
+Pre built binaries are on [Releases](https://github.com/moznion/zabbix-internal-checks-exporter/releases).
+
 ## Supported Zabbix version
 
 - 4.4
