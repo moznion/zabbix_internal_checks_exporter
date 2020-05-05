@@ -107,11 +107,10 @@ func (c *JsonRPCClient) GetItem(authToken string, internalChecksKey string) (*it
 }
 
 type userLoginRequest struct {
-	JsonRPCVersion string `json:"jsonrpc"`
-	Method         string `json:"method"`
-	//AuthToken      string                 `json:"auth"`
-	ID     uint64                 `json:"id"`
-	Params *userLoginRequestParam `json:"params"`
+	JsonRPCVersion string                 `json:"jsonrpc"`
+	Method         string                 `json:"method"`
+	ID             uint64                 `json:"id"`
+	Params         *userLoginRequestParam `json:"params"`
 }
 
 type userLoginRequestParam struct {
@@ -127,8 +126,7 @@ func makeUserLoginRequest(userName string, password string) *userLoginRequest {
 	return &userLoginRequest{
 		JsonRPCVersion: defaultJsonRPCVersion,
 		Method:         userLoginMethod,
-		//AuthToken:      nil,
-		ID: 1,
+		ID:             1,
 		Params: &userLoginRequestParam{
 			UserName: userName,
 			Password: password,
