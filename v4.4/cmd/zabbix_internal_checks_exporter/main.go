@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/moznion/zabbix_internal_checks_exporter/internal"
@@ -23,12 +24,19 @@ func parseCommandLineOptions() (int64, string, string, string, time.Duration, er
 	var port int64
 	var zabbixURL, zabbixUserName, zabbixPassword string
 	var intervalSec uint64
+	var showVersion bool
 	flag.Int64Var(&port, "port", defaultPort, "[mandatory] a port number of exporter listens")
 	flag.StringVar(&zabbixURL, "zabbix-url", defaultZabbixURL, "[mandatory] a Zabbix server URL to collect the metrics")
 	flag.StringVar(&zabbixUserName, "zabbix-user", defaultZabbixUserName, "[mandatory] a Zabbix server user name for authentication to use API")
 	flag.StringVar(&zabbixPassword, "zabbix-password", defaultZabbixPassword, "[mandatory] a Zabbix server password for authentication to use API")
 	flag.Uint64Var(&intervalSec, "interval-sec", defaultIntervalSec, "[optional] an interval seconds of collecting the metrics")
+	flag.BoolVar(&showVersion, "version", false, "show version information")
 	flag.Parse()
+
+	if showVersion { // XXX dirty!
+		fmt.Printf("%s\n", internal.GetVersions())
+		os.Exit(0)
+	}
 
 	if port == defaultPort {
 		return 0, "", "", "", 0, errors.New(`"--port" is mandatory parameter, but that is missing`)
