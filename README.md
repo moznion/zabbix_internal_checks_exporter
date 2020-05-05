@@ -37,6 +37,12 @@ In other versions, it hasn't confirmed what it works certainly. If you know the 
 
 This exporter retrieves "Zabbix internal checks" through JSON-RPC API calling: [item.get](https://www.zabbix.com/documentation/current/manual/api/reference/item/get) for `zabbix[*]`.
 
+## Special Metric
+
+### `zabbix_internal_checks_metrics_collected_at`
+
+This value is set epoch milliseconds when the "Zabbix internal checks" metrics were collected. You can use this value to check whether it has collected the metrics periodically.
+
 ## Note
 
 This exporter uses a key of a Zabbix metric as a Prometheus metric name, but it sanitizes some metric name because of the limitation of Prometheus's naming rule.
