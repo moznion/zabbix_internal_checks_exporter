@@ -1,0 +1,38 @@
+project_name: zabbix-internal-checks-exporter
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  -
+    main: ./v4.4/cmd/zabbix_internal_checks_exporter/main.go
+    ldflags:
+    - "-X github.com/moznion/zabbix-internal-checks-exporter/internal.revision={{ .FullCommit }}"
+    - "-X github.com/moznion/zabbix-internal-checks-exporter/internal.version={{ .Version }}"
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: desc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+    - '^:pencil:'
+
