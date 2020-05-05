@@ -19,13 +19,13 @@ const metricsCollectedAtEpochMillis = "metrics_collected_at"
 
 type MetricsCollector struct {
 	metrics       map[string]prometheus.Gauge
-	jsonRPCClient *internal.JsonRPCClient
+	jsonRPCClient *internal.JSONRPCClient
 	userName      string
 	password      string
 	interval      time.Duration
 }
 
-func NewMetricsCollector(jsonRPCClient *internal.JsonRPCClient, userName string, password string, interval time.Duration) *MetricsCollector {
+func NewMetricsCollector(jsonRPCClient *internal.JSONRPCClient, userName string, password string, interval time.Duration) *MetricsCollector {
 	return &MetricsCollector{
 		metrics:       make(map[string]prometheus.Gauge),
 		jsonRPCClient: jsonRPCClient,
@@ -64,7 +64,7 @@ func (mc *MetricsCollector) StartCollecting() {
 
 				itemResponse, err := mc.jsonRPCClient.GetItem(authToken, "zabbix[*]")
 				if err != nil {
-					if errors.Is(err, internal.ErrJsonRPCClientRequestError) {
+					if errors.Is(err, internal.ErrJSONRPCClientRequestError) {
 						// if it comes here, the reason is either one of the followings:
 						//   - not auth token was expired
 						//   - a request was completely failed

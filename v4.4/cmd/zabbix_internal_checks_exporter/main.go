@@ -53,7 +53,7 @@ func main() {
 	}
 
 	exporter.NewMetricsCollector(
-		&internal.JsonRPCClient{ZabbixBaseURL: zabbixURL},
+		&internal.JSONRPCClient{ZabbixBaseURL: zabbixURL},
 		zabbixUserName,
 		zabbixPassword,
 		interval,
