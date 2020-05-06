@@ -2,6 +2,7 @@ package exporter
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"regexp"
 	"strconv"
@@ -109,7 +110,7 @@ func (mc *MetricsCollector) StartCollecting() {
 						mc.metrics[metricItem.Key] = promauto.NewGauge(prometheus.GaugeOpts{
 							Namespace: namespace,
 							Name:      sanitizePrometheusExporterName(metricItem.Key),
-							Help:      metricItem.Name,
+							Help:      fmt.Sprintf("%s (original key: %s)", metricItem.Name, metricItem.Key),
 						})
 					}
 					mc.metrics[metricItem.Key].Set(lastValue)
