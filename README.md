@@ -61,6 +61,20 @@ And it replaces other not allowed characters (i.e. `[^a-zA-Z0-9_:]`) to empty ch
 
 Please see also [Metric and label naming | Prometheus](https://prometheus.io/docs/practices/naming/).
 
+## Metrics Example
+
+```
+# HELP zabbix_internal_checks_metrics_collected_at Epoch milliseconds at Zabbix internal checks metrics were collected
+# TYPE zabbix_internal_checks_metrics_collected_at gauge
+zabbix_internal_checks_metrics_collected_at 1.588776472169e+12
+# HELP zabbix_internal_checks_zabbix__process:alerter:avg:busy__ Zabbix $4 $2 processes, in % (original key: zabbix[process,alerter,avg,busy])
+# TYPE zabbix_internal_checks_zabbix__process:alerter:avg:busy__ gauge
+zabbix_internal_checks_zabbix__process:alerter:avg:busy__ 0
+# HELP zabbix_internal_checks_zabbix__process:configuration_syncer:avg:busy__ Zabbix $4 $2 processes, in % (original key: zabbix[process,configuration syncer,avg,busy])
+# TYPE zabbix_internal_checks_zabbix__process:configuration_syncer:avg:busy__ gauge
+zabbix_internal_checks_zabbix__process:configuration_syncer:avg:busy__ 8.5211
+```
+
 ## License
 
 ```
