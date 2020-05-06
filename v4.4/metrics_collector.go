@@ -3,6 +3,7 @@ package exporter
 import (
 	"errors"
 	"log"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -133,16 +134,21 @@ func (mc *MetricsCollector) initMetrics() {
 	mc.setCollectedAt(-1)
 }
 
+var sanitizeCharacters = map[string]string{
+	"[": "__",
+	"]": "__",
+	"{": "__",
+	"}": "__",
+	",": ":",
+	" ": "_",
+	"-": "_",
+}
+var notAllowedPromMetricNameCharactersRe = regexp.MustCompile("[^a-zA-Z0-9_:]")
+
 func sanitizePrometheusExporterName(name string) string {
-	return strings.ReplaceAll(
-		strings.ReplaceAll(
-			strings.ReplaceAll(
-				strings.ReplaceAll(
-					strings.ReplaceAll(
-						name, "[", "__",
-					), ",", ":",
-				), "]", "",
-			), " ", "_",
-		), "-", "_",
-	)
+	sanitized := name
+	for from, to := range sanitizeCharacters {
+		sanitized = strings.ReplaceAll(sanitized, from, to)
+	}
+	return notAllowedPromMetricNameCharactersRe.ReplaceAllString(sanitized, "")
 }

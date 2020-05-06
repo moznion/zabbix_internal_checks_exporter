@@ -1,4 +1,7 @@
-check: lint vet fmt-check
+check: test lint vet fmt-check
+
+test:
+	go test ./...
 
 lint:
 	golint -set_exit_status ./...

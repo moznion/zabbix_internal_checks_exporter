@@ -50,10 +50,16 @@ This exporter uses a key of a Zabbix metric as a Prometheus metric name, but it 
 |original|sanitized        |
 |--------|-----------------|
 | `[`    | `__`            |
+| `]`    | `__`            |
+| `{`    | `__`            |
+| `}`    | `__`            |
 | `,`    | `:`             |
-| `]`    | `` (empty char) |
 | ` `    | `_`             |
 | `-`    | `_`             |
+
+And it replaces other not allowed characters (i.e. `[^a-zA-Z0-9_:]`) to empty characters.
+
+Please see also [Metric and label naming | Prometheus](https://prometheus.io/docs/practices/naming/).
 
 ## License
 
